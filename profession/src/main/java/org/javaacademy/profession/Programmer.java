@@ -1,15 +1,15 @@
 package org.javaacademy.profession;
 
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import org.javaacademy.Sex;
 import org.javaacademy.task.Task;
 
-@Getter
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class Programmer extends Employee {
+    static int MIN_RATE = 1_500;
+    static int MAX_RATE = 2_000;
 
     public Programmer(@NonNull String name,
                       @NonNull String surname,
@@ -20,7 +20,7 @@ public class Programmer extends Employee {
 
     @Override
     public void setRate(int rate) {
-        if (rate >= 1500 && rate <= 2000) {
+        if (rate >= MIN_RATE && rate <= MAX_RATE) {
             super.setRate(rate);
             return;
         }
@@ -36,5 +36,4 @@ public class Programmer extends Employee {
     public String toString() {
         return getFullName();
     }
-
 }

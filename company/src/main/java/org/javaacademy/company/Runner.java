@@ -17,14 +17,10 @@ public class Runner {
         if (!args[1].matches("^\\d+$")) {
             throw new IllegalArgumentException("Введите число в десятичной системе");
         }
-        Company oracle = new Company(args[0], Integer.parseInt(args[1]));
-
         Manager manager = new Manager("Вася", "иванов", "петрович", Sex.MALE);
-        oracle.addManager(manager);
         Programmer programmerOne = new Programmer("Олег", "сидоров", "олегович", Sex.MALE);
         Programmer programmerTwo = new Programmer("Анна", "иванова", "смирнова", Sex.FEMALE);
-        oracle.addProgrammer(programmerOne);
-        oracle.addProgrammer(programmerTwo);
+        Company oracle = new Company(args[0], manager, List.of(programmerOne, programmerTwo), Integer.parseInt(args[1]));
 
         Task taskOne = new Task("задача #1", 8);
         Task taskTwo = new Task("задача #2", 12);

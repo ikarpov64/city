@@ -1,8 +1,8 @@
 package org.javaacademy.company;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
@@ -13,25 +13,24 @@ import org.javaacademy.task.Task;
 
 import java.util.*;
 
-@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Company {
     @NonNull
     final String name;
-    final int programmerRate;
-    Manager manager;
+    final Manager manager;
+    final List<Programmer> programmers;
     double totalCosts;
-    List<Programmer> programmers = new ArrayList<>();
     MultiValuedMap<Programmer, Task> programmerTaskList = new ArrayListValuedHashMap<>();
     Map<Employee, Double> employeeWorkHours = new HashMap<>();
 
-    public void addProgrammer(@NonNull Programmer programmer) {
-        programmers.add(programmer);
-        programmer.setRate(programmerRate);
-    }
-
-    public void addManager(@NonNull Manager manager) {
+    public Company(@NonNull String name,
+                   @NonNull Manager manager,
+                   List<Programmer> programmers,
+                   int programmerRate) {
+        this.name = name;
         this.manager = manager;
+        this.programmers = programmers;
+        programmers.forEach(programmer -> programmer.setRate(programmerRate));
     }
 
     //5.3
