@@ -1,0 +1,77 @@
+package org.javaacademy.company;
+
+import lombok.AccessLevel;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
+import org.javaacademy.profession.Employee;
+import org.javaacademy.profession.Manager;
+import org.javaacademy.profession.Programmer;
+import org.javaacademy.task.Task;
+
+import java.util.*;
+
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Company {
+    @NonNull
+    final String name;
+    final int programmerRate;
+    Manager manager;
+    double totalCosts;
+    List<Programmer> programmers = new ArrayList<>();
+    MultiValuedMap<Programmer, Task> programmerTaskList = new ArrayListValuedHashMap<>();
+    Map<Employee, Double> employeeWorkHours = new HashMap<>();
+
+    public void addProgrammer(@NonNull Programmer programmer) {
+        programmers.add(programmer);
+        programmer.setRate(programmerRate);
+    }
+
+    public void addManager(@NonNull Manager manager) {
+        this.manager = manager;
+    }
+
+    //5.3
+    public void weeklyWork(@NonNull Queue<Task> tasks) {
+        while (!tasks.isEmpty()) {
+            for (Programmer programmer : programmers) {
+                if (tasks.isEmpty()) {
+                    break;
+                }
+                Task task = tasks.poll();
+                programmer.acceptsTask(task);
+                programmerTaskList.put(programmer, task);
+                employeeWorkHours.put(programmer, employeeWorkHours.getOrDefault(programmer, 0.0)
+                        + task.getNumberHoursPerTask());
+                employeeWorkHours.put(manager, (employeeWorkHours.getOrDefault(manager, 0.0)
+                        + task.getNumberHoursPerTask() * 0.1));
+            }
+        }
+    }
+
+    //5.4
+    public void paySalaries() {
+        totalCosts += manager.getRate() * employeeWorkHours.getOrDefault(manager, 0.0);
+        manager.setMoneyEarned(employeeWorkHours.getOrDefault(manager, 0.0) * manager.getRate());
+        for (Programmer programmer : programmers) {
+            programmer.setMoneyEarned(employeeWorkHours.getOrDefault(programmer, 0.0) * programmer.getRate());
+            totalCosts += programmer.getRate() * employeeWorkHours.getOrDefault(programmer, 0.0);
+            employeeWorkHours.put(programmer, 0.0);
+        }
+        employeeWorkHours.put(manager, 0.0);
+    }
+
+    //5.5
+    public void companyInfo() {
+        System.out.printf("%s\nЗатраты: %.2f\n", name, totalCosts);
+        System.out.println("Список выполненных задач у компании:");
+        programmerTaskList.keySet().forEach(programmer -> {
+            System.out.print(programmer.getFullName() + " - ");
+            programmerTaskList.get(programmer).stream().map(task -> task.getName() + ", ").forEach(System.out::print);
+            System.out.println();
+        });
+    }
+}

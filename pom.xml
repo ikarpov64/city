@@ -11,6 +11,8 @@
     <modules>
         <module>human</module>
         <module>civil_registry</module>
+        <module>profession</module>
+        <module>company</module>
     </modules>
 
     <properties>
@@ -54,20 +56,13 @@
                         </goals>
                     </execution>
                 </executions>
-
                 <configuration>
                     <configLocation>checkstyle.xml</configLocation>
-                    <!--                    <encoding>UTF-8</encoding>-->
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile><id>PROM</id></profile>
-        <profile><id>TEST</id></profile>
-    </profiles>
 
 </project>
