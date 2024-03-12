@@ -15,10 +15,10 @@ public  class Employee extends Human {
     double moneyEarned;
     int rate;
 
-    public Employee(@NonNull String name,
-                    @NonNull String surname,
-                    @NonNull String patronymic,
-                    Sex sex) {
-        super(name, surname, patronymic, sex);
+    public Employee(@NonNull String firstName,
+                    @NonNull String middleName,
+                    @NonNull String lastName,
+                    @NonNull Sex sex) {
+        super(firstName, middleName, lastName, sex);
     }
 }
