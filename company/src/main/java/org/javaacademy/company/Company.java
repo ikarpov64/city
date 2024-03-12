@@ -1,7 +1,6 @@
 package org.javaacademy.company;
 
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.collections4.MultiValuedMap;
@@ -11,11 +10,13 @@ import org.javaacademy.profession.Manager;
 import org.javaacademy.profession.Programmer;
 import org.javaacademy.task.Task;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Company {
-    @NonNull
     final String name;
     final Manager manager;
     final List<Programmer> programmers;
@@ -25,7 +26,7 @@ public class Company {
 
     public Company(@NonNull String name,
                    @NonNull Manager manager,
-                   List<Programmer> programmers,
+                   @NonNull List<Programmer> programmers,
                    int programmerRate) {
         this.name = name;
         this.manager = manager;
