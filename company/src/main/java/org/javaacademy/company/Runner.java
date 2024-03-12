@@ -1,13 +1,12 @@
 package org.javaacademy.company;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import org.javaacademy.Sex;
 import org.javaacademy.profession.Manager;
 import org.javaacademy.profession.Programmer;
 import org.javaacademy.task.Task;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
 
 public class Runner {
     public static void main(String[] args) {
@@ -20,7 +19,8 @@ public class Runner {
         Manager manager = new Manager("Вася", "иванов", "петрович", Sex.MALE);
         Programmer programmerOne = new Programmer("Олег", "сидоров", "олегович", Sex.MALE);
         Programmer programmerTwo = new Programmer("Анна", "иванова", "смирнова", Sex.FEMALE);
-        Company oracle = new Company(args[0], manager, List.of(programmerOne, programmerTwo), Integer.parseInt(args[1]));
+        Company oracle = new Company(
+                args[0], manager, List.of(programmerOne, programmerTwo), Integer.parseInt(args[1]));
 
         Task taskOne = new Task("задача #1", 8);
         Task taskTwo = new Task("задача #2", 12);

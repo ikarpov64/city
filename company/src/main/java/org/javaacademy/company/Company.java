@@ -1,5 +1,9 @@
 package org.javaacademy.company;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
@@ -9,11 +13,6 @@ import org.javaacademy.profession.Employee;
 import org.javaacademy.profession.Manager;
 import org.javaacademy.profession.Programmer;
 import org.javaacademy.task.Task;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Company {
@@ -59,9 +58,8 @@ public class Company {
         for (Programmer programmer : programmers) {
             programmer.setMoneyEarned(employeeWorkHours.getOrDefault(programmer, 0.0) * programmer.getRate());
             totalCosts += programmer.getRate() * employeeWorkHours.getOrDefault(programmer, 0.0);
-            employeeWorkHours.put(programmer, 0.0);
         }
-        employeeWorkHours.put(manager, 0.0);
+        employeeWorkHours = new HashMap<>();
     }
 
     //5.5
