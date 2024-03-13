@@ -23,6 +23,13 @@ public class Company {
     MultiValuedMap<Programmer, Task> programmerTaskList = new ArrayListValuedHashMap<>();
     Map<Employee, Double> employeeWorkHours = new HashMap<>();
 
+
+    /**
+     * @param name           Название компании
+     * @param manager        Менеджер
+     * @param programmers    Список программистов
+     * @param programmerRate Единая ставка для программистов
+     */
     public Company(@NonNull String name,
                    @NonNull Manager manager,
                    @NonNull List<Programmer> programmers,
@@ -33,7 +40,11 @@ public class Company {
         programmers.forEach(programmer -> programmer.setRate(programmerRate));
     }
 
-    //5.3
+    /**
+     * 5.3. В компании есть недельная работа
+     *
+     * @param tasks Cписок задач
+     */
     public void weeklyWork(@NonNull Queue<Task> tasks) {
         while (!tasks.isEmpty()) {
             for (Programmer programmer : programmers) {
@@ -51,7 +62,10 @@ public class Company {
         }
     }
 
-    //5.4
+    /**
+     * 5.4. Компания расплачивается за неделю работы: обнуляет табель учета времени,
+     * а всем работникам выплачивает деньги. В сумму затрат вносятся все выплаты.
+     */
     public void paySalaries() {
         double managerMoney = manager.getRate() * employeeWorkHours.getOrDefault(manager, 0.0);
         totalCosts += managerMoney;
@@ -64,7 +78,16 @@ public class Company {
         employeeWorkHours = new HashMap<>();
     }
 
-    //5.5
+    /**
+     * 5.5 Печатает информацию:
+     * "
+     * [имя компании]
+     * Затраты: [сумма затрат до 2х знаков после запятой]
+     * Список выполненных задач у компании:
+     * [ФИО программиста] - [список задач]
+     * [ФИО программиста] - [список задач]
+     * "
+     */
     public void companyInfo() {
         System.out.printf("%s\nЗатраты: %.2f\n", name, totalCosts);
         System.out.println("Список выполненных задач у компании:");

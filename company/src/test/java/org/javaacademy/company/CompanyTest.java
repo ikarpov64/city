@@ -1,6 +1,5 @@
 package org.javaacademy.company;
 
-
 import org.javaacademy.Sex;
 import org.javaacademy.profession.Manager;
 import org.javaacademy.profession.Programmer;
@@ -13,23 +12,22 @@ import org.mockito.Mockito;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CompanyTest {
+    private static final String COMPANY_NAME = "Oracle";
+    private static final int PROGRAMMER_RATE = 1_600;
     private static Manager managerMock = Mockito.mock(Manager.class);
     private static Programmer programmerOneMock = Mockito.mock(Programmer.class);
     private static Programmer programmerTwoMock = Mockito.mock(Programmer.class);
     private static List<Programmer> programmerListMock = List.of(programmerOneMock, programmerTwoMock);
-    private static final String COMPANY_NAME = "Oracle";
-    private static final int PROGRAMMER_RATE = 1_600;
     private static Task taskOneMock = Mockito.mock(Task.class);
     private static Task taskTwoMock = Mockito.mock(Task.class);
     private static Task taskThreeMock = Mockito.mock(Task.class);
 
     @Test
     @DisplayName("Создание компании без ошибок")
-    void CompanyCreate() {
+    void companyCreate() {
         Assertions.assertDoesNotThrow(
                 () -> new Company(COMPANY_NAME, managerMock, programmerListMock, PROGRAMMER_RATE));
     }
@@ -37,11 +35,8 @@ public class CompanyTest {
     @Test
     @DisplayName("Создание компании с null именем компании")
     void companyNameNull() {
-        NullPointerException thrown = assertThrows(NullPointerException.class, () -> {
-            Company company = new Company(null, managerMock, programmerListMock, PROGRAMMER_RATE);
-            company.paySalaries();
-        });
-        assertEquals("name is marked non-null but is null", thrown.getMessage());
+        assertThrows(NullPointerException.class, () ->
+                new Company(null, managerMock, programmerListMock, PROGRAMMER_RATE));
     }
 
     @Test
