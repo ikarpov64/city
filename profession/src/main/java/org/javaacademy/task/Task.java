@@ -6,7 +6,7 @@ import lombok.NonNull;
 @Data
 public class Task {
     @NonNull
-    final String name;
+    final String description;
     final int numberHoursPerTask;
     boolean isDone;
 }
