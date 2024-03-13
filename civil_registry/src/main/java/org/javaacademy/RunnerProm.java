@@ -4,10 +4,11 @@ import java.time.LocalDate;
 
 public class RunnerProm {
     public static void main(String[] args) {
-        String civilRegistryName = "";
-        if (args.length != 0) {
-            civilRegistryName = args[0];
+        if (args.length == 0) {
+            throw new IllegalArgumentException("Необходимо название ЗАГСа в качестве параметра.");
         }
+
+        String civilRegistryName = args[0];
         CivilRegistry civilRegistry = new CivilRegistry(civilRegistryName);
 
         // Мужчины

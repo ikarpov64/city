@@ -1,8 +1,8 @@
 package org.javaacademy;
 
-import org.javaacademy.enums.FamilyStatus;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
+import org.javaacademy.enums.FamilyStatus;
 
 @UtilityClass
 public class CivilRegistryUtil {
