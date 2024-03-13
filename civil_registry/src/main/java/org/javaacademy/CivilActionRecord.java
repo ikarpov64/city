@@ -1,9 +1,9 @@
 package org.javaacademy;
 
-import org.javaacademy.enums.CivilActionType;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.Value;
+import org.javaacademy.enums.CivilActionType;
 
 /**
  * Представляет запись о гражданском действии.

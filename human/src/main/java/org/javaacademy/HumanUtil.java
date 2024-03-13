@@ -13,7 +13,7 @@ public class HumanUtil {
      *
      * @param human1 Первый объект типа Human для сравнения пола.
      * @param human2 Второй объект типа Human для сравнения пола.
-     * @throws RuntimeException если оба объекта имеют одинаковый пол.
+     * @throws NullPointerException если один из переданных граждан является null.
      */
     boolean checkSameGender(@NonNull Human human1, @NonNull Human human2) {
         return human1.getSex().equals(human2.getSex());
