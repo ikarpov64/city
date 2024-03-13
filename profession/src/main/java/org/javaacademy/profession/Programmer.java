@@ -5,9 +5,10 @@ import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import org.javaacademy.Sex;
 import org.javaacademy.task.Task;
+import org.javaacademy.task.TaskAssignable;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class Programmer extends Employee {
+public class Programmer extends Employee implements TaskAssignable {
     static int MIN_RATE = 1_500;
     static int MAX_RATE = 2_000;
 
@@ -27,9 +28,10 @@ public class Programmer extends Employee {
         throw new IllegalArgumentException("Ставка от 1500 до 2000 рублей");
     }
 
+    @Override
     public void acceptsTask(Task task) {
         task.setDone(true);
-        System.out.println(task.getName() + "- сделана");
+        System.out.println(task.getDescription() + "- сделана");
     }
 
     @Override

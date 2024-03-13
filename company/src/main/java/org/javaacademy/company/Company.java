@@ -53,11 +53,13 @@ public class Company {
 
     //5.4
     public void paySalaries() {
-        totalCosts += manager.getRate() * employeeWorkHours.getOrDefault(manager, 0.0);
-        manager.setMoneyEarned(employeeWorkHours.getOrDefault(manager, 0.0) * manager.getRate());
+        double managerMoney = manager.getRate() * employeeWorkHours.getOrDefault(manager, 0.0);
+        totalCosts += managerMoney;
+        manager.setMoneyEarned(managerMoney);
         for (Programmer programmer : programmers) {
-            programmer.setMoneyEarned(employeeWorkHours.getOrDefault(programmer, 0.0) * programmer.getRate());
-            totalCosts += programmer.getRate() * employeeWorkHours.getOrDefault(programmer, 0.0);
+            double earnedMoney = programmer.getRate() * employeeWorkHours.getOrDefault(programmer, 0.0);
+            programmer.setMoneyEarned(earnedMoney);
+            totalCosts += earnedMoney;
         }
         employeeWorkHours = new HashMap<>();
     }
@@ -68,7 +70,10 @@ public class Company {
         System.out.println("Список выполненных задач у компании:");
         programmerTaskList.keySet().forEach(programmer -> {
             System.out.print(programmer.getFullName() + " - ");
-            programmerTaskList.get(programmer).stream().map(task -> task.getName() + ", ").forEach(System.out::print);
+            programmerTaskList.get(programmer)
+                    .stream()
+                    .map(task -> task.getDescription() + ", ")
+                    .forEach(System.out::print);
             System.out.println();
         });
     }
