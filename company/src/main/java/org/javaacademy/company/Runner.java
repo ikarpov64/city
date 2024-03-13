@@ -16,6 +16,9 @@ public class Runner {
         if (!args[1].matches("^\\d+$")) {
             throw new IllegalArgumentException("Введите число в десятичной системе");
         }
+        if (args[0].isBlank()) {
+            throw new IllegalArgumentException("Название компании не может быть пустым");
+        }
         Manager manager = new Manager(
                 "Джейме", "Тайвинович", "Ланистер", Sex.MALE);
         Programmer programmerOne = new Programmer(
