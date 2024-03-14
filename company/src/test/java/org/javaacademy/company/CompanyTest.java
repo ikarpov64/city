@@ -66,12 +66,21 @@ public class CompanyTest {
     }
 
     @Test
-    @DisplayName("Запуск рабочей недели")
-    void companyWeeklyWork() {
+    @DisplayName("Запуск рабочей недели без ошибок")
+    void companyWeeklyWorkSuccess() {
         Company companyTest = new Company(COMPANY_NAME, managerMock,
                 List.of(programmerOneMock, programmerTwoMock), PROGRAMMER_RATE);
         Assertions.assertDoesNotThrow(
                 () -> companyTest.weeklyWork(new LinkedList<>(List.of(taskOneMock, taskTwoMock, taskThreeMock))));
+    }
+
+    @Test
+    @DisplayName("Запуск рабочей недели с ошибкой")
+    void companyWeeklyWorkFailed() {
+        Company companyTest = new Company(COMPANY_NAME, managerMock,
+                List.of(programmerOneMock, programmerTwoMock), PROGRAMMER_RATE);
+        Assertions.assertThrows(NullPointerException.class,
+                () -> companyTest.weeklyWork(null));
     }
 
     @Test

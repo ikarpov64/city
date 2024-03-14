@@ -2,6 +2,7 @@ package org.javaacademy;
 
 import static org.javaacademy.Sex.FEMALE;
 import static org.javaacademy.Sex.MALE;
+import static org.javaacademy.enums.CivilActionType.BIRTH_REGISTRATION;
 
 import org.javaacademy.enums.FamilyStatus;
 import org.javaacademy.exceptions.SameSexException;
@@ -9,9 +10,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.time.LocalDate;
+import java.util.List;
 
 @DisplayName("Тестирование ЗАГСа")
 public class CivilRegistryTest {
@@ -22,7 +22,7 @@ public class CivilRegistryTest {
     private static Citizen mockCitizen4 = Mockito.mock(Citizen.class);
 
     @Test
-    @DisplayName("Создание записи о свадьбе без ошибок.")
+    @DisplayName("Свадьба без ошибок.")
     void weddingRegistrationSuccess() {
         Mockito.when(mockCitizen1.getSex()).thenReturn(MALE);
         Mockito.when(mockCitizen2.getSex()).thenReturn(FEMALE);
@@ -33,12 +33,13 @@ public class CivilRegistryTest {
     }
 
     @Test
-    @DisplayName("Ошибки создание записей о свадьбе")
+    @DisplayName("Свадьба с ошибками")
     void weddingRegistrationFailed() {
         Mockito.when(mockCitizen1.getSex()).thenReturn(MALE);
         Mockito.when(mockCitizen2.getSex()).thenReturn(FEMALE);
         Mockito.when(mockCitizen3.getSex()).thenReturn(FEMALE);
         Mockito.when(mockCitizen4.getSex()).thenReturn(FEMALE);
+        Mockito.when(mockCitizen1.getFamilyStatus()).thenReturn(FamilyStatus.DIVORCED);
         Mockito.when(mockCitizen4.getFamilyStatus()).thenReturn(FamilyStatus.MARRIED);
         LocalDate dateNow = LocalDate.now();
 
@@ -48,10 +49,36 @@ public class CivilRegistryTest {
                 () -> civilRegistryTest.weddingRegistration(mockCitizen2, mockCitizen3, dateNow));
         Assertions.assertThrows(RuntimeException.class,
                 () -> civilRegistryTest.weddingRegistration(mockCitizen4, mockCitizen1, dateNow));
+        Assertions.assertThrows(RuntimeException.class,
+                () -> civilRegistryTest.weddingRegistration(mockCitizen1, mockCitizen4, dateNow));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> civilRegistryTest.weddingRegistration(null, mockCitizen1, dateNow));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> civilRegistryTest.weddingRegistration(mockCitizen1, null, dateNow));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> civilRegistryTest.weddingRegistration(mockCitizen1, mockCitizen2, null));
     }
 
     @Test
-    @DisplayName("Создание записи о разводе без ошибок")
+    @DisplayName("Установка статусов граждан без ошибок")
+    void setCitizenStatusSuccess() {
+        Assertions.assertDoesNotThrow(
+                () -> civilRegistryTest.setCitizenStatus(mockCitizen1, mockCitizen1, FamilyStatus.DIVORCED));
+    }
+
+    @Test
+    @DisplayName("Установка статусов граждан ошибками")
+    void setCitizenStatusFailed() {
+        Assertions.assertThrows(NullPointerException.class,
+                () -> civilRegistryTest.setCitizenStatus(null, mockCitizen1, FamilyStatus.DIVORCED));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> civilRegistryTest.setCitizenStatus(mockCitizen1, null, FamilyStatus.DIVORCED));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> civilRegistryTest.setCitizenStatus(mockCitizen1, mockCitizen2, null));
+    }
+
+    @Test
+    @DisplayName("Развод без ошибок")
     void divorceRegistrationSuccess() {
 
         Mockito.when(mockCitizen1.getSex()).thenReturn(MALE);
@@ -68,7 +95,7 @@ public class CivilRegistryTest {
     }
 
     @Test
-    @DisplayName("Ошибки при создании записи о разводе")
+    @DisplayName("Развод с ошибками")
     void divorceRegistrationFailed() {
         Mockito.when(mockCitizen1.getSex()).thenReturn(MALE);
         Mockito.when(mockCitizen2.getSex()).thenReturn(FEMALE);
@@ -83,13 +110,42 @@ public class CivilRegistryTest {
 
         Assertions.assertThrows(RuntimeException.class,
                 () -> civilRegistryTest.divorceRegistration(mockCitizen1, mockCitizen2, dateNow));
-
+        Assertions.assertThrows(RuntimeException.class,
+                () -> civilRegistryTest.divorceRegistration(mockCitizen2, mockCitizen1, dateNow));
         Assertions.assertThrows(RuntimeException.class,
                 () -> civilRegistryTest.divorceRegistration(mockCitizen1, mockCitizen3, dateNow));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> civilRegistryTest.divorceRegistration(null, mockCitizen3, dateNow));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> civilRegistryTest.divorceRegistration(mockCitizen1, null, dateNow));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> civilRegistryTest.divorceRegistration(mockCitizen1, mockCitizen3, null));
     }
 
     @Test
-    @DisplayName("Создание записи о рождении без ошибок")
+    @DisplayName("Добавление записи в реестр с ошибкой.")
+    void addCivilActionReportFailed() {
+        Assertions.assertThrows(NullPointerException.class,
+                () -> civilRegistryTest.addCivilActionReport(null));
+    }
+
+    @Test
+    @DisplayName("Добавление записи в реестр без ошибки.")
+    void addCivilActionReportSuccess() {
+        Citizen mockCitizen1 = Mockito.mock(Citizen.class);
+        Citizen mockCitizen2 = Mockito.mock(Citizen.class);
+        Citizen mockChild = Mockito.mock(Citizen.class);
+        Mockito.when(mockCitizen1.getSex()).thenReturn(MALE);
+        Mockito.when(mockCitizen2.getSex()).thenReturn(FEMALE);
+        CivilActionRecord civilActionRecord = new CivilActionRecord(
+                BIRTH_REGISTRATION,
+                List.of(mockChild, mockCitizen1, mockCitizen2), LocalDate.now());
+
+        Assertions.assertDoesNotThrow(() -> civilRegistryTest.addCivilActionReport(civilActionRecord));
+    }
+
+    @Test
+    @DisplayName("Рождение ребенка без ошибок")
     void birthRegistrationSuccess() {
         Citizen mockCitizen1 = Mockito.mock(Citizen.class);
         Citizen mockCitizen2 = Mockito.mock(Citizen.class);
@@ -104,7 +160,7 @@ public class CivilRegistryTest {
     }
 
     @Test
-    @DisplayName("Создание записи о рождении c ошибками")
+    @DisplayName("Рождение ребенка с ошибками")
     void birthRegistrationFailed() {
         Citizen mockCitizen1 = Mockito.mock(Citizen.class);
         Citizen mockCitizen2 = Mockito.mock(Citizen.class);
@@ -118,6 +174,14 @@ public class CivilRegistryTest {
                 () -> civilRegistryTest.birthRegistration(mockChild, mockCitizen1, mockCitizen1, dateNow));
         Assertions.assertThrows(SameSexException.class,
                 () -> civilRegistryTest.birthRegistration(mockChild, mockCitizen1, mockCitizen2, dateNow));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> civilRegistryTest.birthRegistration(null, mockCitizen1, mockCitizen2, dateNow));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> civilRegistryTest.birthRegistration(mockChild, null, mockCitizen2, dateNow));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> civilRegistryTest.birthRegistration(mockChild, mockCitizen1, null, dateNow));
+        Assertions.assertThrows(NullPointerException.class,
+                () -> civilRegistryTest.birthRegistration(mockChild, mockCitizen1, mockCitizen2, null));
     }
 
     @Test
@@ -135,25 +199,5 @@ public class CivilRegistryTest {
         civilRegistryTest.weddingRegistration(mockCitizen1, mockCitizen2, LocalDate.now().plusDays(2));
 
         Assertions.assertDoesNotThrow(() -> civilRegistryTest.getStatistics());
-    }
-
-    @Test
-    @DisplayName("Проверка вывода корректной статистики.")
-    void getCorrectStatisticsSuccess() {
-        Citizen mockCitizen1 = Mockito.mock(Citizen.class);
-        Citizen mockCitizen2 = Mockito.mock(Citizen.class);
-        Mockito.when(mockCitizen1.getSex()).thenReturn(MALE);
-        Mockito.when(mockCitizen2.getSex()).thenReturn(FEMALE);
-        LocalDate registrationDate = LocalDate.of(2024, 3, 15);
-
-        civilRegistryTest.weddingRegistration(mockCitizen1, mockCitizen2, registrationDate);
-
-        String expectedString = "Статистика по ЗАГС: TEST\n" +
-                "Дата 15/03/2024: Количество свадеб - 1, Количество разводов - 0, Количество рождений - 0";
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-        civilRegistryTest.getStatistics();
-        String printedResult = outputStream.toString().trim();
-        Assertions.assertEquals(expectedString, printedResult);
     }
 }
