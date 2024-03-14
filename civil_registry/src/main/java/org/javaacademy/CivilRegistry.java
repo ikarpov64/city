@@ -130,7 +130,7 @@ public class CivilRegistry {
      * @param status   Новый семейный статус для граждан.
      * @throws NullPointerException если какой-либо из аргументов является null.
      */
-    private void setCitizenStatus(@NonNull Citizen citizen1,
+    public void setCitizenStatus(@NonNull Citizen citizen1,
                                   @NonNull Citizen citizen2,
                                   @NonNull FamilyStatus status) {
         List.of(citizen1, citizen2).forEach(citizen -> {
@@ -148,7 +148,7 @@ public class CivilRegistry {
      *
      * @param civilActionRecord Запись о гражданском действии.
      */
-    private void addCivilActionReport(@NonNull CivilActionRecord civilActionRecord) {
+    public void addCivilActionReport(@NonNull CivilActionRecord civilActionRecord) {
         civilActionRecordsTree.add(civilActionRecord);
     }
 

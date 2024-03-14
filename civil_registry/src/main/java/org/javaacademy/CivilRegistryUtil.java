@@ -15,7 +15,7 @@ public class CivilRegistryUtil {
      * @return true, если пол граждан одинаков, иначе false.
      * @throws NullPointerException если один из переданных граждан является null.
      */
-    boolean checkCitizensGender(@NonNull Citizen citizen1, @NonNull Citizen citizen2) {
+    public boolean checkCitizensGender(@NonNull Citizen citizen1, @NonNull Citizen citizen2) {
         return citizen1.getSex().equals(citizen2.getSex());
     }
 
@@ -26,7 +26,7 @@ public class CivilRegistryUtil {
      * @return true, если семейный статус гражданина равен "Состоит в браке" (MARRIED), иначе false.
      * @throws NullPointerException если переданный гражданин является null.
      */
-    boolean checkMarriageStatus(@NonNull Citizen citizen) {
+    public boolean checkMarriageStatus(@NonNull Citizen citizen) {
         return FamilyStatus.MARRIED.equals(citizen.getFamilyStatus());
     }
 
@@ -38,8 +38,7 @@ public class CivilRegistryUtil {
      * @return true, если первый гражданин имеет партнера и этот партнер равен второму гражданину, иначе false.
      * @throws NullPointerException если один из переданных граждан является null.
      */
-    boolean checkCitizensAreMarried(@NonNull Citizen citizen1, @NonNull Citizen citizen2) {
-        return citizen1.getPartner() != null
-                && citizen1.getPartner().equals(citizen2);
+    public boolean checkCitizensAreMarried(@NonNull Citizen citizen1, @NonNull Citizen citizen2) {
+        return citizen1.getPartner().equals(citizen2);
     }
 }
