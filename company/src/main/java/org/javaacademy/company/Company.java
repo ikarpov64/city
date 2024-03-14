@@ -23,7 +23,6 @@ public class Company {
     MultiValuedMap<Programmer, Task> programmerTaskList = new ArrayListValuedHashMap<>();
     Map<Employee, Double> employeeWorkHours = new HashMap<>();
 
-
     /**
      * @param name           Название компании
      * @param manager        Менеджер
@@ -75,14 +74,14 @@ public class Company {
             programmer.setMoneyEarned(earnedMoney);
             totalCosts += earnedMoney;
         }
-        employeeWorkHours = new HashMap<>();
+        employeeWorkHours.clear();
     }
 
     /**
      * 5.5 Печатает информацию:
      * "
      * [имя компании]
-     * Затраты: [сумма затрат до 2х знаков после запятой]
+     * Затраты: [сумма затрат до 2-х знаков после запятой]
      * Список выполненных задач у компании:
      * [ФИО программиста] - [список задач]
      * [ФИО программиста] - [список задач]

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -75,7 +74,7 @@ public class CompanyTest {
     }
 
     @Test
-    @DisplayName("Запуск рабочей недели с ошибкой")
+    @DisplayName("Запуск рабочей недели с null списком задач")
     void companyWeeklyWorkFailed() {
         Company companyTest = new Company(COMPANY_NAME, managerMock,
                 List.of(programmerOneMock, programmerTwoMock), PROGRAMMER_RATE);
