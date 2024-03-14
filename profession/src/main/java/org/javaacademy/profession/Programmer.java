@@ -31,7 +31,7 @@ public class Programmer extends Employee implements TaskAssignable {
     @Override
     public void acceptsTask(Task task) {
         task.setDone(true);
-        System.out.println(task.getDescription() + "- сделана");
+        System.out.println(task.getDescription() + " - сделана");
     }
 
     @Override
