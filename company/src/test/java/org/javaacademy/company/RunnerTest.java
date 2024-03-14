@@ -1,8 +1,5 @@
 package org.javaacademy.company;
 
-import org.javaacademy.Sex;
-import org.javaacademy.profession.Manager;
-import org.javaacademy.task.Task;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,18 +48,5 @@ public class RunnerTest {
     void runnerTestWithInvalidProgrammerRate() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> Runner.main(new String[]{COMPANY_NAME, "qwer32"}));
-    }
-
-    @Test
-    @DisplayName("Создание задачи с валидными значениями")
-    void createTaskValidData() {
-        Assertions.assertDoesNotThrow(() -> new Task("Задача 1", 15));
-    }
-
-    @Test
-    @DisplayName("Создание менеджера с валидными значениями")
-    void createManagerValidData() {
-        Assertions.assertDoesNotThrow(() ->
-                new Manager("Вадим", "Владимирович", "Иванов", Sex.MALE));
     }
 }

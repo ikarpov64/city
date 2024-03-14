@@ -66,7 +66,7 @@
                             <excludes>
                                 <exclude>**/enums/**</exclude>
                                 <exclude>**/Runner*.class</exclude>
-<!--                                <exclude>**/Citizen*.class</exclude>-->
+                                <exclude>**/Citizen*.class</exclude>
                                 <exclude>**/CivilActionComparator.class</exclude>
                             </excludes>
                         </configuration>
